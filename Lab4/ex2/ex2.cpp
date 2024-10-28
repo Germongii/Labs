@@ -1,55 +1,23 @@
-﻿#include <iostream>
-#include <string>
+﻿#include "Weapon.h"
+#include <iostream>
 using namespace std;
 
-class Gun {
-private:
-    string name;
-    int damage;
-    int weight;
-public:
-    Gun(string name, int damage, int weight) {
-        this->name = name;
-        this->damage = damage;
-        this->weight = weight;
-    }
-    Gun() {
-        name = "uzi";
-        damage = 12;
-        weight = 50;
-    }
-    bool testWeight(int maxWeight) {
-        if (weight >= maxWeight) {
-            return false;
-        }
-        else {
-            return true;
-        }
+int main() {
+    // Создание двух объектов оружия
+    Weapon weapon1("Sword", 20, 3.0);
+    Weapon weapon2("Shield", 5, 7.5);
 
-    }
-    int getTotalWeight(double additionalWeight) const {
-        return this->weight + additionalWeight;
-    }
+    // Вывод информации о каждом объекте
+    weapon1.displayInfo();
+    weapon2.displayInfo();
 
-    int getTotalWeight(const Gun& other) const {
-        return getTotalWeight(other.weight);
-    }
-    ~Gun() {
-        cout << name << endl;
-        cout << damage << endl;
-        cout << weight << endl;
-        cout << "Class deleting" << endl;
-    }
+    // Использование метода, принимающего объект, который теперь вызывает перегруженную версию
+    double totalWeight1 = weapon1.getTotalWeight(weapon2);
+    cout << "\nTotal Weight of Weapon1 and Weapon2: " << totalWeight1 << " kg" << endl;
 
-};
+    // Использование перегруженного метода для получения суммарного веса объекта и дополнительного веса
+    double totalWeight2 = weapon1.getTotalWeight(2.0); // Например, добавляем вес 2.0 кг
+    cout << "Total Weight of Weapon1 and additional weight: " << totalWeight2 << " kg" << endl;
 
-#include <iostream>
-
-int main()
-{
-    Gun* dynamicGun = new Gun("test2", 100, 10);
-    Gun customGun("test", 76, 20);
-    delete dynamicGun;
     return 0;
 }
-
